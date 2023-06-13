@@ -1,5 +1,6 @@
 # MINIST
 MNIST (Modified National Institute of Standards and Technology) is a widely used dataset in the field of machine learning and computer vision. It consists of a large collection of handwritten digits that are commonly used for training and testing image classification algorithms
+https://assets.gatesnotes.com/8a5ac0b3-6095-00af-c50a-89056fbe4642/11eeb7f9-7512-49aa-abdc-a27001dd123e/AI_20230215_article-hero_1200x564.jpg
 
 ## Colab Notebooks
 
