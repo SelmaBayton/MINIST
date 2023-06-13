@@ -6,7 +6,7 @@ MNIST (Modified National Institute of Standards and Technology) is a widely used
 * [MNIST Random Walk](https://colab.research.google.com/drive/1agVaAv0yX_uszqS1m9j7IlVUeF7ozWIG)
 * [Datasets](https://colab.research.google.com/drive/1gVp57s8zwglNIj3Wps89BnAEcobFvKAY)
 * [Slicing and Indexing](https://colab.research.google.com/drive/1xjfKes7UNeXojmfFGNDpSdcj1z0TOYTh)
-* [Optimization](https://colab.research.google.com/drive/19M60mQfizgcjtNPkY7myA1mxZ9O2h_X7?usp=sharing)
+  * [Optimization](https://colab.research.google.com/drive/1kTf3aRBs-kRgYXDn9vIiSgLPUO_T_zd9)
 * [Classify MNIST Linear](https://colab.research.google.com/drive/1S_zVmHa0s0EkfIQL2DbexTH49RYOsGPZ?usp=sharing)
 * [Fully Connected Networks](https://colab.research.google.com/drive/1mzDUk7lpKOiZTyGDpPve30A-A057lpsP?usp=sharing)
 * [Autoencoder Networks](https://colab.research.google.com/drive/1plbvxqA4vjJqJZ2XzUkUoZaXhabovhfv?usp=sharing)
