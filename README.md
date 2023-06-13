@@ -4,7 +4,7 @@ MNIST (Modified National Institute of Standards and Technology) is a widely used
 ## Notebooks
 
 * [MNIST Random Walk](https://colab.research.google.com/drive/1agVaAv0yX_uszqS1m9j7IlVUeF7ozWIG)
-* [Datasets](https://colab.research.google.com/drive/1rPEm6-tTHOdfx_urnbO4txT60TbasbT9?usp=sharing)
+* [Datasets](https://colab.research.google.com/drive/1gVp57s8zwglNIj3Wps89BnAEcobFvKAY)
 * [Slicing and Indexing](https://colab.research.google.com/drive/15HmcYGx-0wftkca86OBHYaJKELjVJ9Su?usp=sharing)
 * [Optimization](https://colab.research.google.com/drive/19M60mQfizgcjtNPkY7myA1mxZ9O2h_X7?usp=sharing)
 * [Classify MNIST Linear](https://colab.research.google.com/drive/1S_zVmHa0s0EkfIQL2DbexTH49RYOsGPZ?usp=sharing)
