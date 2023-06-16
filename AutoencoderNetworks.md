@@ -1,3 +1,21 @@
+In machine learning, an autoencoder is a type of neural network architecture used for unsupervised learning and dimensionality reduction. It consists of an encoder network and a decoder network.
+
+Mathematically, an autoencoder aims to learn an approximation of the identity function, where the output should be as close as possible to the input. The goal is to learn a compressed representation or encoding of the input data in a lower-dimensional latent space, and then reconstruct the original input from this compressed representation.
+
+Let's denote the input data as X and the output reconstruction as X'. The autoencoder consists of two main components:
+
+1. Encoder: The encoder network maps the input data X to a lower-dimensional latent representation, typically referred to as the encoder function. Mathematically, it can be represented as Enc(X) = Z, where Z is the latent representation. The encoder learns to extract essential features and compress the input data into a lower-dimensional space.
+
+2. Decoder: The decoder network reconstructs the input data from the latent representation Z, aiming to produce an output that closely resembles the original input. Mathematically, it can be represented as Dec(Z) = X', where X' is the reconstructed output. The decoder learns to decode the latent representation and reconstruct the input data with minimal information loss.
+
+To train the autoencoder, a loss function is defined to measure the dissimilarity between the input data and its reconstruction. The most commonly used loss function is the mean squared error (MSE), which calculates the average squared difference between the input and output. The objective of training is to minimize this reconstruction loss.
+
+During the training process, the autoencoder learns to capture the most important features and patterns of the input data in the latent space. By forcing the model to reconstruct the input data accurately, the autoencoder can effectively learn a compressed representation that captures the essence of the data while discarding redundant or noise-related information.
+
+Once trained, the encoder part of the autoencoder can be used to extract the latent representations from new, unseen data points. These representations can then be used for various purposes such as dimensionality reduction, anomaly detection, or as input for other machine learning models.
+
+Overall, the autoencoder utilizes neural networks and an encoder-decoder architecture to learn compressed representations of the input data, enabling efficient representation learning and reconstruction.
+
 ```python
 def plot(x):
     if type(x) == torch.Tensor:
