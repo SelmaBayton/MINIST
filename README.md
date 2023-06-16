@@ -3,8 +3,6 @@ MNIST (Modified National Institute of Standards and Technology) is a widely used
 <img src="https://assets.gatesnotes.com/8a5ac0b3-6095-00af-c50a-89056fbe4642/11eeb7f9-7512-49aa-abdc-a27001dd123e/AI_20230215_article-hero_1200x564.jpg">
 
 ##
-Sure! I'll provide a brief explanation of some commonly used machine learning concepts:
-
 1. Gradient: The gradient is a vector that points in the direction of the steepest ascent of a function. In machine learning, gradients are used in optimization algorithms like gradient descent to update the model's parameters during training, with the goal of minimizing the loss function.
 
 2. Vectorization: Vectorization is the process of expressing operations on entire arrays or matrices rather than individual elements. It leverages the parallelism capabilities of modern CPUs and GPUs, resulting in faster and more efficient computations in machine learning algorithms.
@@ -22,8 +20,6 @@ Sure! I'll provide a brief explanation of some commonly used machine learning co
 8. Random Walk: A random walk is a mathematical concept where an object moves randomly from one position to another in a sequence of steps. In machine learning, random walks can be used in various contexts, such as generating synthetic data or exploring the state space in reinforcement learning.
 
 9. Slicing and Indexing: Slicing and indexing are operations used to access specific elements or subsets of data in arrays or data structures. In machine learning, slicing and indexing are commonly used to extract features or target variables from datasets, or to access specific portions of arrays for computations.
-
-These explanations provide a brief overview of these concepts. Each concept has more depth and can be explored further based on specific use cases and algorithms.
 
 ### Colab Notebooks
 
