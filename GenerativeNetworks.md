@@ -37,3 +37,80 @@ The training of generative networks involves alternating updates between the gen
 After training, the generator G can be used to generate new samples by feeding random noise vectors z into the generator function: x' = G(z). The generated samples x' are intended to resemble the distribution of the training data.
 
 Generative networks have wide applications in image synthesis, text generation, anomaly detection, and data augmentation, among others. They offer a powerful approach to generate realistic and novel samples from complex data distributions, enabling various creative and data-driven tasks in machine learning.
+#
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+import urllib.request
+from PIL import Image
+from imageio import *
+import torch
+from skimage.transform import resize
+from mpl_toolkits.axes_grid1.axes_rgb import make_rgb_axes, RGBAxes
+from torchvision.models import *
+from torchvision.datasets import MNIST, KMNIST, FashionMNIST
+from skimage.util import montage
+
+!pip install wandb
+import wandb as wb
+
+def plot(x):
+    if type(x) == torch.Tensor:
+        x = x.cpu().detach().numpy()
+
+    fig, ax = plt.subplots()
+    im = ax.imshow(x, cmap='gray')
+    ax.axis('off')
+    fig.set_size_inches(5, 5)
+    plt.show()
+
+def montage_plot(x):
+    x = np.pad(x, pad_width=((0, 0), (1, 1), (1, 1)), mode='constant', constant_values=0)
+    plot(montage(x))
+
+b = 1000
+
+def get_batch(mode):
+    if mode == "train":
+        r = np.random.randint(X.shape[0] - b)
+        x = X[r:r+b, :]
+        y = Y[r:r+b]
+    elif mode == "test":
+        r = np.random.randint(X_test.shape[0] - b)
+        x = X_test[r:r+b, :]
+        y = Y_test[r:r+b]
+    return x, y
+
+train_set = KMNIST('./data', train=True, download=True)
+test_set = KMNIST('./data', train=False, download=True)
+X = train_set.data.numpy()
+X_test = test_set.data.numpy()
+Y = train_set.targets.numpy()
+Y_test = test_set.targets.numpy()
+
+X = X[:, None, :, :] / 255
+X_test = X_test[:, None, :, :] / 255
+
+X.shape
+plot(X[101, 0, :, :])
+Y[100]
+X[0:25, 0, :, :].shape
+montage_plot(X[125:150, 0, :, :])
+```
+
+Explanation:
+
+- The necessary libraries and modules are imported.
+- Utility functions `plot` and `montage_plot` are defined for visualization purposes.
+- The batch size `b` is set to 1000.
+- The function `get_batch` is defined to retrieve batches of data based on the mode (train or test).
+- The KMNIST dataset is downloaded and preprocessed.
+- The data is normalized and reshaped.
+- The shape of the data is printed.
+- An example image from the dataset is plotted.
+- The label of the 100th sample is printed.
+- The shape of a subset of images is printed.
+- A montage of a subset of images is plotted.
+
+To generate a `readme.md` file, you need to create a Markdown file separately and include the formatted code and explanations in it.
