@@ -38,3 +38,67 @@ X = g(X)
 where g() represents the unknown transformation or clustering algorithm used to extract information from the input features.
 
 Datasets serve as the foundation for training and evaluating machine learning models. They provide the necessary input and output information for learning algorithms to generalize patterns and make predictions or discover hidden structures in the data. The quality and representativeness of the dataset play a crucial role in the performance and reliability of machine learning models.
+#
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from torchvision import datasets
+import torch
+from skimage.util import montage
+
+def GPU(data):
+    return torch.tensor(data, requires_grad=True, dtype=torch.float, device=torch.device('cuda'))
+
+def GPU_data(data):
+    return torch.tensor(data, requires_grad=False, dtype=torch.float, device=torch.device('cuda'))
+
+def plot(x):
+    if type(x) == torch.Tensor:
+        x = x.cpu().detach().numpy()
+
+    fig, ax = plt.subplots()
+    im = ax.imshow(x, cmap='gray')
+    ax.axis('off')
+    fig.set_size_inches(10, 10)
+    plt.show()
+
+def montage_plot(x):
+    x = np.pad(x, pad_width=((0, 0), (1, 1), (1, 1)), mode='constant', constant_values=0)
+    plot(montage(x))
+
+train_set = datasets.MNIST('./data', train=True, download=True)
+test_set = datasets.MNIST('./data', train=False, download=True)
+
+X = train_set.data.numpy()
+X_test = test_set.data.numpy()
+Y = train_set.targets.numpy()
+Y_test = test_set.targets.numpy()
+
+X = X[:, None, :, :] / 255
+X_test = X_test[:, None, :, :] / 255
+
+X.shape, Y.shape, X_test.shape, Y_test.shape
+X.shape
+plot(X[1002, 0, :, :])
+Y[1002]
+montage_plot(X[0:100, 0, :, :])
+```
+
+Explanation:
+
+- The code imports numpy, matplotlib, datasets from torchvision, torch, and montage from skimage.util.
+- The `GPU` function is defined to convert data to a tensor with requires_grad=True and move it to the GPU device.
+- The `GPU_data` function is defined to convert data to a tensor without requiring gradients and move it to the GPU device.
+- The `plot` function is defined to plot an image using matplotlib.
+- The `montage_plot` function is defined to create a montage of images and plot it using the `plot` function.
+- MNIST datasets (train_set and test_set) are downloaded and stored in the specified directory.
+- The data and targets from the MNIST datasets are extracted and stored in variables X, X_test, Y, and Y_test.
+- The pixel values in X and X_test are normalized by dividing them by 255.
+- The shapes of X, Y, X_test, and Y_test are displayed.
+- The shape of X is displayed separately.
+- The image at index 1002 in X is plotted using the `plot` function.
+- The corresponding target value for the image at index 1002 is displayed.
+- A montage of the first 100 images in X is created using the `montage_plot` function.
+
+Please note that the code assumes you have the necessary libraries and modules installed. If any of them are missing, you may encounter errors.
