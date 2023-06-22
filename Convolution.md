@@ -30,3 +30,73 @@ The convolution operation is performed by sliding the filter over the input, com
 The size of the output depends on factors such as the size of the input, the size of the filter, and the stride (i.e., the amount by which the filter is shifted at each step).
 
 Convolution plays a crucial role in CNNs by enabling the extraction of local features from the input data. It helps capture patterns, edges, and other relevant information, leading to effective representation learning and improved performance in various machine learning tasks.
+#
+
+```python
+!pip install git+https://github.com/williamedwardhahn/mpcr
+from mpcr import *
+
+def softmax(x):
+    s1 = torch.exp(x - torch.max(x, 1)[0][:, None])
+    s = s1 / s1.sum(1)[:, None]
+    return s
+
+def cross_entropy(outputs, labels):
+    return -torch.sum(softmax(outputs).log()[range(outputs.size()[0]), labels.long()]) / outputs.size()[0]
+
+def randn_trunc(s):
+    # Truncated Normal Random Numbers
+    mu = 0
+    sigma = 0.1
+    R = stats.truncnorm((-2 * sigma - mu) / sigma, (2 * sigma - mu) / sigma, loc=mu, scale=sigma)
+    return R.rvs(s)
+
+def acc(out, y):
+    with torch.no_grad():
+        return (torch.sum(torch.max(out, 1)[1] == y).item()) / y.shape[0]
+
+def GPU(data):
+    return torch.tensor(data, requires_grad=True, dtype=torch.float, device=torch.device('cuda'))
+
+def GPU_data(data):
+    return torch.tensor(data, requires_grad=False, dtype=torch.float, device=torch.device('cuda'))
+
+def plot(x):
+    if type(x) == torch.Tensor:
+        x = x.cpu().detach().numpy()
+
+    fig, ax = plt.subplots()
+    im = ax.imshow(x, cmap='gray')
+    ax.axis('off')
+    fig.set_size_inches(10, 10)
+    plt.show()
+
+# MNIST
+train_set = datasets.MNIST('./data', train=True, download=True)
+test_set = datasets.MNIST('./data', train=False, download=True)
+
+X = train_set.data.numpy()
+X_test = test_set.data.numpy()
+Y = train_set.targets.numpy()
+Y_test = test_set.targets.numpy()
+
+X = X[:, None, :, :] / 255
+X_test = X_test[:, None, :, :] / 255
+
+X.shape, Y.shape, X_test.shape, Y_test.shape
+X.shape
+plot(X[0, 0, :, :])
+```
+
+Explanation:
+- The code installs the `mpcr` library from a GitHub repository using the `pip install` command.
+- The `softmax` function computes the softmax activation for a given input tensor `x`.
+- The `cross_entropy` function calculates the cross-entropy loss between predicted outputs and target labels.
+- The `randn_trunc` function generates truncated normal random numbers with the specified shape.
+- The `acc` function computes the accuracy of predicted outputs `out` compared to the ground truth labels `y`.
+- The `GPU` function converts the input data to a tensor with GPU support.
+- The `GPU_data` function converts the input data to a tensor without requiring gradients and with GPU support.
+- The `plot` function is a utility function to visualize an image or tensor using matplotlib.
+- The code loads the MNIST dataset using the `datasets.MNIST` class and preprocesses the data.
+- The variable `X` contains the training images, `X_test` contains the test images, `Y` contains the training labels, and `Y_test` contains the test labels.
+- The shape of the data and an example image from `X` are printed using the `shape` function and the `plot` function
