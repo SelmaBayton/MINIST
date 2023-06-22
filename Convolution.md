@@ -33,70 +33,41 @@ Convolution plays a crucial role in CNNs by enabling the extraction of local fea
 #
 
 ```python
+%%capture
 !pip install git+https://github.com/williamedwardhahn/mpcr
 from mpcr import *
+import imageio as io
 
-def softmax(x):
-    s1 = torch.exp(x - torch.max(x, 1)[0][:, None])
-    s = s1 / s1.sum(1)[:, None]
-    return s
+# Load image from URL
+image = io.imread("http://harborparkgarage.com/img/venues/pix/aquarium2.jpg")
 
-def cross_entropy(outputs, labels):
-    return -torch.sum(softmax(outputs).log()[range(outputs.size()[0]), labels.long()]) / outputs.size()[0]
+# Display the image
+plot(image)
 
-def randn_trunc(s):
-    # Truncated Normal Random Numbers
-    mu = 0
-    sigma = 0.1
-    R = stats.truncnorm((-2 * sigma - mu) / sigma, (2 * sigma - mu) / sigma, loc=mu, scale=sigma)
-    return R.rvs(s)
+# Normalize the image
+image = image.astype(float) / 255.0
 
-def acc(out, y):
-    with torch.no_grad():
-        return (torch.sum(torch.max(out, 1)[1] == y).item()) / y.shape[0]
+image.shape
 
-def GPU(data):
-    return torch.tensor(data, requires_grad=True, dtype=torch.float, device=torch.device('cuda'))
+# Create a random 5x5x3 array
+plot(np.random.random((5, 5, 3)))
 
-def GPU_data(data):
-    return torch.tensor(data, requires_grad=False, dtype=torch.float, device=torch.device('cuda'))
+# Create random filters
+filters = np.random.random((96, 11, 11, 3))
 
-def plot(x):
-    if type(x) == torch.Tensor:
-        x = x.cpu().detach().numpy()
-
-    fig, ax = plt.subplots()
-    im = ax.imshow(x, cmap='gray')
-    ax.axis('off')
-    fig.set_size_inches(10, 10)
-    plt.show()
-
-# MNIST
-train_set = datasets.MNIST('./data', train=True, download=True)
-test_set = datasets.MNIST('./data', train=False, download=True)
-
-X = train_set.data.numpy()
-X_test = test_set.data.numpy()
-Y = train_set.targets.numpy()
-Y_test = test_set.targets.numpy()
-
-X = X[:, None, :, :] / 255
-X_test = X_test[:, None, :, :] / 255
-
-X.shape, Y.shape, X_test.shape, Y_test.shape
-X.shape
-plot(X[0, 0, :, :])
+# Display a filter
+plot(filters[1, :, :, :])
 ```
 
 Explanation:
+- The `%%capture` magic command is used to capture the output of the pip install command.
 - The code installs the `mpcr` library from a GitHub repository using the `pip install` command.
-- The `softmax` function computes the softmax activation for a given input tensor `x`.
-- The `cross_entropy` function calculates the cross-entropy loss between predicted outputs and target labels.
-- The `randn_trunc` function generates truncated normal random numbers with the specified shape.
-- The `acc` function computes the accuracy of predicted outputs `out` compared to the ground truth labels `y`.
-- The `GPU` function converts the input data to a tensor with GPU support.
-- The `GPU_data` function converts the input data to a tensor without requiring gradients and with GPU support.
-- The `plot` function is a utility function to visualize an image or tensor using matplotlib.
-- The code loads the MNIST dataset using the `datasets.MNIST` class and preprocesses the data.
-- The variable `X` contains the training images, `X_test` contains the test images, `Y` contains the training labels, and `Y_test` contains the test labels.
-- The shape of the data and an example image from `X` are printed using the `shape` function and the `plot` function
+- The `imageio` library is imported as `io`.
+- The code loads an image from the given URL using the `io.imread` function.
+- The loaded image is displayed using the `plot` function.
+- The image is normalized by dividing it by 255.0 to bring the pixel values within the range of [0, 1].
+- The shape of the image is printed using the `shape` attribute.
+- A random 5x5x3 array is created using the `np.random.random` function, representing an RGB image.
+- The random array is displayed using the `plot` function.
+- Random filters are created with dimensions (96, 11, 11, 3), representing a set of 96 filters with size 11x11x3.
+- A filter from the filters array is displayed using the `plot` function.
