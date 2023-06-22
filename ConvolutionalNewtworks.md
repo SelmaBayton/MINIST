@@ -29,3 +29,51 @@ CNNs are trained using a loss function that measures the discrepancy between the
 To train the CNN, an optimization algorithm, such as gradient descent, is employed to iteratively update the network parameters, including the filter weights, biases, and fully connected layer weights, based on the gradients of the loss function.
 
 By leveraging the convolution operation, pooling, and activation functions, CNNs are capable of automatically learning hierarchical representations of the input data, capturing local patterns, and achieving state-of-the-art performance on various computer vision tasks, including image classification, object detection, and image segmentation.
+#
+Certainly! Here's an explanation of the code with markdown formatting:
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+import urllib.request
+from PIL import Image
+from imageio import *
+import torch
+from skimage.transform import resize
+from mpl_toolkits.axes_grid1.axes_rgb import make_rgb_axes, RGBAxes
+from torchvision.models import *
+from torchvision.datasets import MNIST, KMNIST, FashionMNIST
+from skimage.util import montage
+import skimage.io as skio
+from scipy import signal
+from torchvision import transforms
+import requests
+from torchsummary import summary
+```
+
+The code imports various libraries and modules necessary for image processing, deep learning, and visualization.
+
+```python
+def plot(x):
+    if type(x) == torch.Tensor:
+        x = x.cpu().detach().numpy()
+
+    fig, ax = plt.subplots()
+    im = ax.imshow(x, cmap='gray')
+    ax.axis('off')
+    fig.set_size_inches(10, 10)
+    plt.show()
+```
+
+The `plot` function takes an image tensor or numpy array `x` and displays it using matplotlib. If `x` is a tensor, it is first converted to a numpy array. The image is displayed in grayscale and the axis is turned off.
+
+```python
+urllib.request.urlretrieve('https://raw.githubusercontent.com/imageio/imageio-binaries/master/images/imageio_banner.png', "image1.png")
+im = Image.open("image1.png")
+```
+
+The code downloads an image from a given URL and saves it as "image1.png". Then, it opens the image using the `Image` module from PIL (Python Imaging Library).
+
+The remaining code snippets are incomplete or don't seem to have a clear purpose. If you provide more context or specific instructions, I'll be happy to help further.
+
+Regarding the `readme.md` file, you can create a new file named `readme.md` in your preferred text editor and copy the above explanation into it. Save the file with the `.md` extension, and you'll have a Markdown-formatted readme file.
