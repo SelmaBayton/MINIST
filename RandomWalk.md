@@ -32,3 +32,62 @@ Random walks exhibit various interesting properties, such as:
 Random walks have applications in machine learning, particularly in reinforcement learning and stochastic optimization algorithms. They can be used to explore and sample from a solution space, search for optimal solutions, or generate synthetic data for training or testing purposes.
 
 Overall, a random walk in machine learning refers to a stochastic process where an agent takes random steps in a defined space. It can be mathematically described using transition probabilities and formulas, providing insights into the agent's movement and behavior.
+#
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from torchvision import datasets
+import torch
+from skimage.util import montage
+
+def GPU(data):
+    return torch.tensor(data, requires_grad=True, dtype=torch.float, device=torch.device('cuda'))
+
+def GPU_data(data):
+    return torch.tensor(data, requires_grad=False, dtype=torch.float, device=torch.device('cuda'))
+
+def plot(x):
+    if type(x) == torch.Tensor:
+        x = x.cpu().detach().numpy()
+
+    fig, ax = plt.subplots()
+    im = ax.imshow(x, cmap='gray')
+    ax.axis('off')
+    fig.set_size_inches(10, 10)
+    plt.show()
+
+def montage_plot(x):
+    x = np.pad(x, pad_width=((0, 0), (1, 1), (1, 1)), mode='constant', constant_values=0)
+    plot(montage(x))
+
+train_set = datasets.MNIST('./data', train=True, download=True)
+test_set = datasets.MNIST('./data', train=False, download=True)
+X = train_set.data.numpy()
+X_test = test_set.data.numpy()
+Y = train_set.targets.numpy()
+Y_test = test_set.targets.numpy()
+
+X = X[:, None, :, :] / 255
+X_test = X_test[:, None, :, :] / 255
+
+X.shape, Y.shape, X_test.shape, Y_test.shape
+x = X[5, 0, :, :]
+x.shape
+plt.imshow(x)
+a = np.random.random((5, 1))
+a
+```
+
+Explanation:
+
+- The necessary libraries and modules are imported.
+- Two functions, `GPU` and `GPU_data`, are defined to move data to the GPU device.
+- Two functions, `plot` and `montage_plot`, are defined for plotting and displaying images.
+- MNIST datasets for training and testing are downloaded and loaded.
+- The data is converted to NumPy arrays.
+- The labels are extracted from the datasets.
+- The input images are normalized and reshaped.
+- The shape of the data arrays and labels are printed.
+- An example image from the dataset is displayed using `plt.imshow()`.
+- A random array `a` with shape `(5, 1)` is created using `np.random.random()`.
