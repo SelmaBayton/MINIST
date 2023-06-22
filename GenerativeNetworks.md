@@ -112,5 +112,3 @@ Explanation:
 - The label of the 100th sample is printed.
 - The shape of a subset of images is printed.
 - A montage of a subset of images is plotted.
-
-To generate a `readme.md` file, you need to create a Markdown file separately and include the formatted code and explanations in it.
