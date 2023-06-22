@@ -43,7 +43,6 @@ The goal of optimization is to find the optimal values for the weight matrix W a
 
 By iteratively adjusting the weights and biases using the training data, the linear model learns to classify the MNIST images into their respective digit classes.
 #
-Certainly! Here's the explanation of the code:
 
 ```python
 import numpy as np
