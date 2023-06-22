@@ -32,27 +32,34 @@ By leveraging the convolution operation, pooling, and activation functions, CNNs
 #
 
 ```python
-import numpy as np
-import matplotlib.pyplot as plt
-import urllib.request
-from PIL import Image
-from imageio import *
-import torch
-from skimage.transform import resize
-from mpl_toolkits.axes_grid1.axes_rgb import make_rgb_axes, RGBAxes
-from torchvision.models import *
-from torchvision.datasets import MNIST, KMNIST, FashionMNIST
-from skimage.util import montage
-import skimage.io as skio
-from scipy import signal
-from torchvision import transforms
-import requests
-from torchsummary import summary
-```
+!pip install git+https://github.com/williamedwardhahn/mpcr
+from mpcr import *
 
-The code imports various libraries and modules necessary for image processing, deep learning, and visualization.
+def softmax(x):
+    s1 = torch.exp(x - torch.max(x, 1)[0][:, None])
+    s = s1 / s1.sum(1)[:, None]
+    return s
 
-```python
+def cross_entropy(outputs, labels):
+    return -torch.sum(softmax(outputs).log()[range(outputs.size()[0]), labels.long()]) / outputs.size()[0]
+
+def randn_trunc(s):
+    # Truncated Normal Random Numbers
+    mu = 0
+    sigma = 0.1
+    R = stats.truncnorm((-2 * sigma - mu) / sigma, (2 * sigma - mu) / sigma, loc=mu, scale=sigma)
+    return R.rvs(s)
+
+def acc(out, y):
+    with torch.no_grad():
+        return (torch.sum(torch.max(out, 1)[1] == y).item()) / y.shape[0]
+
+def GPU(data):
+    return torch.tensor(data, requires_grad=True, dtype=torch.float, device=torch.device('cuda'))
+
+def GPU_data(data):
+    return torch.tensor(data, requires_grad=False, dtype=torch.float, device=torch.device('cuda'))
+
 def plot(x):
     if type(x) == torch.Tensor:
         x = x.cpu().detach().numpy()
@@ -62,13 +69,33 @@ def plot(x):
     ax.axis('off')
     fig.set_size_inches(10, 10)
     plt.show()
+
+# MNIST
+train_set = datasets.MNIST('./data', train=True, download=True)
+test_set = datasets.MNIST('./data', train=False, download=True)
+
+X = train_set.data.numpy()
+X_test = test_set.data.numpy()
+Y = train_set.targets.numpy()
+Y_test = test_set.targets.numpy()
+
+X = X[:, None, :, :] / 255
+X_test = X_test[:, None, :, :] / 255
+
+X.shape, Y.shape, X_test.shape, Y_test.shape
+X.shape
+plot(X[0, 0, :, :])
 ```
 
-The `plot` function takes an image tensor or numpy array `x` and displays it using matplotlib. If `x` is a tensor, it is first converted to a numpy array. The image is displayed in grayscale and the axis is turned off.
-
-```python
-urllib.request.urlretrieve('https://raw.githubusercontent.com/imageio/imageio-binaries/master/images/imageio_banner.png', "image1.png")
-im = Image.open("image1.png")
-```
-
-The code downloads an image from a given URL and saves it as "image1.png". Then, it opens the image using the `Image` module from PIL (Python Imaging Library).
+Explanation:
+- The code installs the `mpcr` library from a GitHub repository using the `pip install` command.
+- The `softmax` function computes the softmax activation for a given input tensor `x`.
+- The `cross_entropy` function calculates the cross-entropy loss between predicted outputs and target labels.
+- The `randn_trunc` function generates truncated normal random numbers with the specified shape.
+- The `acc` function computes the accuracy of predicted outputs `out` compared to the ground truth labels `y`.
+- The `GPU` function converts the input data to a tensor with GPU support.
+- The `GPU_data` function converts the input data to a tensor without requiring gradients and with GPU support.
+- The `plot` function is a utility function to visualize an image or tensor using matplotlib.
+- The code loads the MNIST dataset using the `datasets.MNIST` class and preprocesses the data.
+- The variable `X` contains the training images, `X_test` contains the test images, `Y` contains the training labels, and `Y_test` contains the test labels.
+- The shape of the data and an example image from `X` are printed using the `shape` function and the `plot` function.
