@@ -32,3 +32,69 @@ There are several advanced optimization techniques used in machine learning to i
 These techniques aim to enhance the optimization process and overcome challenges like slow convergence, oscillation, and getting stuck in local optima.
 
 Overall, optimization in machine learning involves formulating an objective function, defining an optimization algorithm (such as gradient descent or its variants), and iteratively updating the model parameters to minimize the objective function. This iterative process helps the model learn and improve its performance on the given task.
+#
+
+
+```python
+import torch
+import numpy as np
+import torchvision
+import torchvision.datasets as datasets
+import matplotlib.pyplot as plt
+
+train_set = datasets.MNIST('./data', train=True, download=True)
+test_set = datasets.MNIST('./data', train=False, download=True)
+X = train_set.data.numpy()
+X_test = test_set.data.numpy()
+Y = train_set.targets.numpy()
+Y_test = test_set.targets.numpy()
+
+X = X[:, None, :, :] / 255
+X_test = X_test[:, None, :, :] / 255
+
+X.shape
+plt.imshow(X[0, 0, :, :], cmap='gray')
+```
+
+Explanation:
+
+- The necessary libraries and modules are imported.
+- MNIST datasets for training and testing are downloaded and loaded.
+- The data is converted to NumPy arrays.
+- The labels are extracted from the datasets.
+- The input images are normalized and reshaped.
+- The shape of the data is printed.
+- An example image from the dataset is displayed using `plt.imshow()` with a grayscale colormap.
+
+Continuing the code:
+
+```python
+for i in range(10):
+    plt.imshow(X[i, 0, :, :], cmap='gray')
+    plt.title(str(Y[i]))
+    plt.show()
+```
+
+Explanation:
+
+- A loop is used to display the first 10 images from the dataset.
+- Each image is plotted using `plt.imshow()` with a grayscale colormap.
+- The corresponding label is used as the title of the plot.
+
+Continuing the code:
+
+```python
+Y[0:10]
+X[0, 0, :, :].shape
+x = X[0, 0, :, :].flatten()
+x.shape
+plt.plot(x, '.')
+```
+
+Explanation:
+
+- The labels of the first 10 samples are printed.
+- The shape of the first image's pixel values is printed.
+- The pixel values of the first image are flattened into a 1-dimensional array.
+- The shape of the flattened array is printed.
+- A line plot is created using `plt.plot()` to visualize the flattened pixel values.
