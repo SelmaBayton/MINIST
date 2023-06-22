@@ -23,3 +23,46 @@ After several convolutional and pooling layers, the output feature maps are usua
 DCNs are trained using a loss function that measures the discrepancy between the predicted outputs and the ground truth labels. The choice of the loss function depends on the specific task, such as classification or regression. The network parameters, including the filter weights, biases, and fully connected layer weights, are optimized using an optimization algorithm like gradient descent.
 
 The depth of the network allows deep convolutional networks to learn hierarchical representations of the input data, capturing increasingly complex and abstract features. With deeper architectures, DCNs can effectively model intricate patterns, achieve higher accuracy, and extract more meaningful representations from input images or other spatial data. However, it's important to balance model complexity with the available data and computational resources to prevent overfitting and optimize performance.
+#
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+import urllib.request
+from PIL import Image
+from imageio import *
+import torch
+from skimage.transform import resize
+from mpl_toolkits.axes_grid1.axes_rgb import make_rgb_axes, RGBAxes
+from torchvision.models import *
+from torchvision.datasets import MNIST, KMNIST, FashionMNIST
+from skimage.util import montage
+import skimage.io as skio
+from scipy import signal
+from torchvision import transforms
+import requests
+from torchsummary import summary
+```
+
+The code imports various libraries and modules necessary for image processing, deep learning, and visualization.
+
+```python
+def plot(x):
+    if type(x) == torch.Tensor:
+        x = x.cpu().detach().numpy()
+
+    fig, ax = plt.subplots()
+    im = ax.imshow(x, cmap='gray')
+    ax.axis('off')
+    fig.set_size_inches(10, 10)
+    plt.show()
+```
+
+The `plot` function takes an image tensor or numpy array `x` and displays it using matplotlib. If `x` is a tensor, it is first converted to a numpy array. The image is displayed in grayscale and the axis is turned off.
+
+```python
+urllib.request.urlretrieve('https://raw.githubusercontent.com/imageio/imageio-binaries/master/images/imageio_banner.png', "image1.png")
+im = Image.open("image1.png")
+```
+
+The code downloads an image from a given URL and saves it as "image1.png". Then, it opens the image using the `Image` module from PIL (Python Imaging Library).
